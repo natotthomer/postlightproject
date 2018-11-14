@@ -2,7 +2,7 @@ venv/
 secret.txt
 postlightproject/settings/local.py
 .vscode/
-static/webpack_bundles
+static/*
 webpack-stats.json
 
 # Byte-compiled / optimized / DLL files

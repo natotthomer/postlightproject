@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webpack_loader',
     'postlightproject'
 ]
 
@@ -119,6 +120,20 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Webpack
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'webpack_bundles/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -131,4 +146,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static", "static-root")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root ")
+MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
