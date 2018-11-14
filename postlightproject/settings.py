@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'postlightproject'
 ]
 
 MIDDLEWARE = [
@@ -54,10 +55,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'postlightproject.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'postlightproject', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
