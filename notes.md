@@ -12,10 +12,12 @@ Features/Requirements/Tools:
 -backend in Django
 
 
--Install Django
--set up staticfiles
--set up urls/views/templates
--set up Webpack
--set up React & Redux
 -set up models/migrations/seed data
--set up UI/forms
+  -images
+  -dob
+  -phone number
+  -address (first_line, city, zip, country) -> needs own model
+-employee urls/pagination
+-set up UI/forms/routing/sorting
+-search
+-animation, clean up
