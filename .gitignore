@@ -1,5 +1,4 @@
 venv/
-secret.txt
 postlightproject/settings/local.py
 .vscode/
 static/*

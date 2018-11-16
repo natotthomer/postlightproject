@@ -1,8 +1,8 @@
+import os
+
 from datetime import datetime
 
 from django.db import models
-
-from utils.file_utils import get_image_file_path
 
 class Employee(models.Model):
     first_name = models.CharField(max_length=64)
@@ -11,8 +11,8 @@ class Employee(models.Model):
     department = models.CharField(max_length=64)
     title = models.CharField(max_length=64)
     dob = models.DateTimeField()
-    phone = models.CharField(max_length=16)
-    cell = models.CharField(max_length=16)
+    phone = models.CharField(max_length=16, blank=True, null=True)
+    cell = models.CharField(max_length=16, blank=True, null=True)
 
     def to_client(self):
         dob = datetime.strftime(self.dob, "%m-%d-%Y")
@@ -32,15 +32,10 @@ class Employee(models.Model):
 
 
 class Image(models.Model):
-    thumbnail = models.ImageField(
-        upload_to=get_image_file_path
-    )
-    medium = models.ImageField(
-        upload_to=get_image_file_path
-    )
-    large = models.ImageField(
-        upload_to=get_image_file_path
-    )
+    thumbnail = models.CharField(max_length=128)
+    medium = models.CharField(max_length=128)
+    large = models.CharField(max_length=128)
+
     employee = models.OneToOneField(
         Employee,
         on_delete=models.CASCADE,
@@ -50,12 +45,10 @@ class Image(models.Model):
     )
 
     def to_client(self):
-        import pdb; pdb.set_trace()
-
         return {
-            'thumbnail': '',
-            'medium': '',
-            'large': ''
+            'thumbnail': self.thumbnail,
+            'medium': self.medium,
+            'large': self.large
         }
 
 
