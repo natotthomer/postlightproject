@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 from utils.file_utils import get_image_file_path
@@ -12,21 +14,32 @@ class Employee(models.Model):
     phone = models.CharField(max_length=16)
     cell = models.CharField(max_length=16)
 
+    def to_client(self):
+        dob = datetime.strftime(self.dob, "%m-%d-%Y")
+
+        return {
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'department': self.department,
+            'title': self.title,
+            'dob': dob,
+            'phone': self.phone,
+            'cell': self.cell,
+            'image': self.image.to_client() if self.image else {},
+            'address': self.address.to_client()
+        }
+
+
 class Image(models.Model):
     thumbnail = models.ImageField(
-        upload_to=get_image_file_path,
-        height_field='thumbnail_height',
-        width_field='thumbnail_width'
+        upload_to=get_image_file_path
     )
     medium = models.ImageField(
-        upload_to=get_image_file_path,
-        height_field='medium_height',
-        width_field='medium_width'
+        upload_to=get_image_file_path
     )
     large = models.ImageField(
-        upload_to=get_image_file_path,
-        height_field='large_height',
-        width_field='large_width'
+        upload_to=get_image_file_path
     )
     employee = models.OneToOneField(
         Employee,
@@ -36,12 +49,20 @@ class Image(models.Model):
         null=True
     )
 
+    def to_client(self):
+        import pdb; pdb.set_trace()
+
+        return {
+            'thumbnail': '',
+            'medium': '',
+            'large': ''
+        }
+
 
 class Address(models.Model):
     street = models.CharField(max_length=128, blank=True, null=True)
     city = models.CharField(max_length=128, blank=True, null=True)
     state = models.CharField(max_length=128, blank=True, null=True)
-    country = models.CharField(max_length=128, blank=True, null=True)
     employee = models.OneToOneField(
         Employee,
         on_delete=models.CASCADE,
@@ -49,3 +70,10 @@ class Address(models.Model):
         blank=True,
         null=True
     )
+
+    def to_client(self):
+        return {
+            'street': self.street,
+            'city': self.city,
+            'state': self.state,
+        }
