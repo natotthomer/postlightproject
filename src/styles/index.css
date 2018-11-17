@@ -21,6 +21,11 @@ a {
   margin: auto;
 }
 
+.search-bar {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .employee-list {
   max-width: 400px;
   margin: auto;
