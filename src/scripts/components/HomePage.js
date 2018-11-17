@@ -5,19 +5,18 @@ import Header from './Header'
 import SearchBar from './SearchBar'
 import EmployeeList from './EmployeeList'
 
-export default class HomePage extends React.Component {
+const HomePage = props => {
   render () {
-    console.log(this.props)
     return (
       <React.Fragment>
         <Header text={'Browse Directory'} />
-        <SearchBar searchHandler={this.props.searchHandler}
-          searchValue={this.props.searchValue} />
-        <EmployeeList employees={this.props.employees} />
+        <SearchBar searchHandler={props.searchHandler}
+          searchValue={props.searchValue} />
+        <EmployeeList employees={props.employees} />
         <div className="employee-list-paginator-container">
           <ReactPaginate
-            pageCount={this.props.numPages}
-            onPageChange={this.props.onPageChange}
+            pageCount={props.numPages}
+            onPageChange={props.onPageChange}
             pageRangeDisplayed={3}
             marginPagesDisplayed={1}
             containerClassName={'employee-list-paginator'}
@@ -31,3 +30,5 @@ export default class HomePage extends React.Component {
     )
   }
 }
+
+export default HomePage

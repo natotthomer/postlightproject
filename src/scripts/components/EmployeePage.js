@@ -16,7 +16,6 @@ export default class EmployeePage extends React.Component {
   }
 
   render () {
-    console.log(this.state)
     if (this.state.full_name) {
       const {
         full_name,
