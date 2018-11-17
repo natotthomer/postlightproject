@@ -1,8 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const EmployeeListItem = props => {
-  console.log(props.employee)
-
   let {
     image,
     first_name,
@@ -17,20 +16,22 @@ const EmployeeListItem = props => {
   const full_name = first_name + ' ' + last_name
 
   return (
-    <div className="employee-list-item">
+    <Link to={`/${id}`} className="employee-list-item">
       <div className="employee-list-item-thumbnail">
-        <img src={props.employee.image} />
+        <div>
+          <img src={props.employee.image} />
+        </div>
       </div>
       <div className="employee-list-item-info">
         <div className="employee-list-item-info-upper">
-          <div>{full_name}</div>
-          <div>{department}</div>
+          <span className="employee-list-item-name">{full_name}</span>
+          <span className="employee-list-item-department">{department}</span>
         </div>
         <div className="employee-list-item-info-lower">
-          <a href={`mailto:${email}`}>{email}</a>
+          <span className="employee-list-item-info-lower">{email}</span>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 

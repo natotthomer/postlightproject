@@ -1,0 +1,61 @@
+body {
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.employee-list {
+  max-width: 400px;
+  margin: auto;
+}
+
+.employee-list > :nth-last-child(n+2) {
+  border-bottom: 1px solid grey;
+}
+
+.employee-list-item {
+  height: 75px;
+  display: flex;
+}
+
+.employee-list-item:hover {
+  background: lightgrey;
+}
+
+.employee-list-item-thumbnail {
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.employee-list-item-thumbnail img {
+  border-radius: 50%;
+}
+
+.employee-list-item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.employee-list-item-info-upper {
+  /* display: flex; */
+}
+
+.employee-list-item-name {
+  font-size: 18px;
+  padding-right: 20px;
+}
+
+.employee-list-item-department {
+  color: grey;
+  font-size: 12px;
+}
+
+.employee-list-item-info-lower {
+
+}
