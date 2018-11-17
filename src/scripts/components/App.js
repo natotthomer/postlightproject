@@ -12,26 +12,44 @@ export default class App extends React.Component {
 
     this.state = {
       searchValue: '',
-      employees: []
+      numPages: undefined,
+      employees: [],
+      page: 0
     }
 
     this.searchHandler = this.searchHandler.bind(this)
+    this.onPageChange = this.onPageChange.bind(this)
+    this.fetchEmployees = this.fetchEmployees.bind(this)
   }
 
   componentDidMount () {
-    fetcher({ url: '/api/employees/'})
-      .then(response => this.setState({ employees: response.data }))
+    this.fetchEmployees()
   }
 
   searchHandler (e) {
     this.setState({ searchValue: e.target.value })
   }
 
+  fetchEmployees () {
+    fetcher({ url: `/api/employees/?page=${this.state.page + 1}`})
+      .then(response => this.setState({
+        employees: response.data,
+        numPages: response.num_pages
+      }))
+  }
+
+  onPageChange ({ selected }) {
+    this.setState({ page: selected }, this.fetchEmployees)
+  }
+
   render () {
     return (
       <Router history={history}>
         <React.Fragment>
-          <Route exact path='/' render={(props) => <HomePage searchHandler={this.searchHandler} {...this.state} />} />
+          <Route exact path='/' render={(props) => <HomePage
+              {...this.state}
+              onPageChange={this.onPageChange}
+              searchHandler={this.searchHandler} />} />
           <Route exact path='/:id' component={EmployeePage} />
         </React.Fragment>
       </Router>

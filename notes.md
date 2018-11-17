@@ -12,12 +12,6 @@ Features/Requirements/Tools:
 -backend in Django
 
 
--set up models/migrations/seed data
-  -images
-  -dob
-  -phone number
-  -address (first_line, city, zip, country) -> needs own model
--employee urls
--set up UI/routing
 -sorting/searching/pagination
+-navigation between two routes -> should it clear search data, etc.
 -animation, clean up
