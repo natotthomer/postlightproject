@@ -1,9 +1,10 @@
 import React from 'react'
+import { Router, Route } from 'react-router-dom'
 
+import fetcher from '../utils/fetcher'
+import history from '../history'
 import HomePage from './HomePage'
-import Header from './Header'
-import SearchBar from './SearchBar'
-import EmployeeList from './EmployeeList'
+import EmployeePage from './EmployeePage'
 
 export default class App extends React.Component {
   constructor (props) {
@@ -11,10 +12,15 @@ export default class App extends React.Component {
 
     this.state = {
       searchValue: '',
-      employees: ['1', '2']
+      employees: []
     }
 
     this.searchHandler = this.searchHandler.bind(this)
+  }
+
+  componentDidMount () {
+    fetcher({ url: '/api/employees/'})
+      .then(response => this.setState({ employees: response.data }))
   }
 
   searchHandler (e) {
@@ -22,14 +28,14 @@ export default class App extends React.Component {
   }
 
   render () {
+    console.log(this.state)
     return (
-      <HomePage>
-        <Header />
-        <SearchBar
-          searchHandler={this.searchHandler}
-          searchValue={this.state.searchValue} />
-        <EmployeeList employees={this.state.employees} />
-      </HomePage>
+      <Router history={history}>
+        <React.Fragment>
+          <Route exact path='/' render={(props) => <HomePage searchHandler={this.searchHandler} {...this.state} />} />
+          <Route exact path='/:id' render={(props) => <EmployeePage {...this.state} />} />
+        </React.Fragment>
+      </Router>
     )
   }
 }
