@@ -27,11 +27,12 @@ export default class App extends React.Component {
   }
 
   searchHandler (e) {
-    this.setState({ searchValue: e.target.value })
+    console.log(e)
+    this.setState({ searchValue: e.target.value }, this.fetchEmployees)
   }
 
   fetchEmployees () {
-    fetcher({ url: `/api/employees/?page=${this.state.page + 1}`})
+    fetcher({ url: `/api/employees/?page=${this.state.page + 1}&search=${this.state.searchValue}`})
       .then(response => this.setState({
         employees: response.data,
         numPages: response.num_pages
