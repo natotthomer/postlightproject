@@ -1,10 +1,19 @@
 body {
+  margin: 0;
   font-family: sans-serif;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.header {
+    box-shadow: 0 1px 10px #BBB;
+    overflow: hidden;
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 40px;
 }
 
 .employee-list {
@@ -37,13 +46,13 @@ a {
 }
 
 .employee-list-item-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .employee-list-item-info-upper {
-  /* display: flex; */
+  padding-bottom: 5px;
 }
 
 .employee-list-item-name {
@@ -57,5 +66,39 @@ a {
 }
 
 .employee-list-item-info-lower {
+  font-size: 12px;
+}
 
+.employee-info-card {
+  width: 400px;
+  margin: auto;
+}
+
+.employee-info-card-header {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.employee-info-card-image > img {
+  border-radius: 50%;
+  margin-right: 30px;
+}
+
+.employee-info-card-brief {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.employee-info-card-brief > :first-child {
+  margin-bottom: auto;
+}
+
+.employee-info-card-brief > span {
+  display: block;
+}
+
+.employee-info-card-name {
+  font-size: 30px;
 }

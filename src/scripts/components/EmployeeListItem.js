@@ -4,16 +4,11 @@ import { Link } from 'react-router-dom'
 const EmployeeListItem = props => {
   let {
     image,
-    first_name,
-    last_name,
     department,
+    full_name,
     id,
     email
   } = props.employee
-
-  first_name = first_name[0].toUpperCase() + first_name.slice(1)
-  last_name = last_name[0].toUpperCase() + last_name.slice(1)
-  const full_name = first_name + ' ' + last_name
 
   return (
     <Link to={`/${id}`} className="employee-list-item">

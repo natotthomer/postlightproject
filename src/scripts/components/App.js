@@ -28,12 +28,11 @@ export default class App extends React.Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <Router history={history}>
         <React.Fragment>
           <Route exact path='/' render={(props) => <HomePage searchHandler={this.searchHandler} {...this.state} />} />
-          <Route exact path='/:id' render={(props) => <EmployeePage {...this.state} />} />
+          <Route exact path='/:id' component={EmployeePage} />
         </React.Fragment>
       </Router>
     )
