@@ -39,7 +39,7 @@ a {
   vertical-align: middle;
   display: flex;
   align-items: center;
-  padding-right: 20px;
+  padding: 0 20px 0 15px;
 }
 
 .employee-list-item-thumbnail img {
@@ -90,12 +90,12 @@ a {
 
 .employee-list-paginator a:hover {
   cursor: pointer;
+  background: #939393;
 }
 
 .employee-list-paginator-active a {
   background: lightblue;
 }
-
 
 .employee-info-card {
   width: 400px;
