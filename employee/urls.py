@@ -1,7 +1,8 @@
-from django.conf.urls import url
+from django.conf.urls import re_path
 
 from employee import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    re_path(r'^$', views.index, name='employee_index'),
+    re_path(r'^(?P<int:id>[^/]+)', views.read, name='employee_read')
 ]
