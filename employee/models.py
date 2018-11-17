@@ -69,6 +69,7 @@ class Address(models.Model):
     street = models.CharField(max_length=128, blank=True, null=True)
     city = models.CharField(max_length=128, blank=True, null=True)
     state = models.CharField(max_length=128, blank=True, null=True)
+    postal_code = models.CharField(max_length=16, blank=True, null=True)
     employee = models.OneToOneField(
         Employee,
         on_delete=models.CASCADE,
@@ -83,4 +84,5 @@ class Address(models.Model):
             'street': self.street,
             'city': self.city,
             'state': self.state,
+            'postal_code': self.postal_code
         }

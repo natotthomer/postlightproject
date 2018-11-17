@@ -7,9 +7,11 @@ from django.core.management.base import BaseCommand, CommandError
 from employee.models import Employee, Address, Image
 from utils.employee_utils import generate_random_department_and_title
 
-
 class Command(BaseCommand):
     help = 'seed the database with random users'
+
+    def capitalize(self, input):
+        return " ".join([word.capitalize() for word in input.split(' ')])
 
     def parse_and_create_employee(self, employee_data):
         name = employee_data.get('name')
@@ -23,14 +25,15 @@ class Command(BaseCommand):
         }
 
         address_data = {
-            'street': address.get('street'),
-            'city': address.get('city'),
-            'state': address.get('state', None)
+            'street': self.capitalize(address.get('street')),
+            'city': self.capitalize(address.get('city')),
+            'state': self.capitalize(address.get('state', None)),
+            'postal_code': address.get('postcode', None)
         }
 
         employee_data = {
-            'first_name': name.get('first'),
-            'last_name': name.get('last'),
+            'first_name': self.capitalize(name.get('first')),
+            'last_name': self.capitalize(name.get('last')),
             'email': employee_data.get('email'),
             'dob': datetime.strptime(employee_data.get('dob').get('date'), "%Y-%m-%dT%H:%M:%SZ"),
             **generate_random_department_and_title(),
