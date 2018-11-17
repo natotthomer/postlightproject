@@ -6,7 +6,8 @@ module.exports = {
   context: __dirname,
   entry: './src/scripts/index.js',
   output: {
-    path: path.resolve(__dirname, './static/webpack_bundles/'),
+    path: path.resolve(__dirname, './dist/'),
+    publicPath: '/static/',
     filename: '[name].scripts.js'
   },
   mode: 'development',
