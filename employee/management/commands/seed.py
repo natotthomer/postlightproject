@@ -44,7 +44,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        r = requests.get('https://randomuser.me/api/?results=100&nat=us')
+        r = requests.get('https://randomuser.me/api/?results=1000&nat=us')
         data = r.json()
 
         for employee in data.get('results'):

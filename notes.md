@@ -17,7 +17,7 @@ Features/Requirements/Tools:
   -dob
   -phone number
   -address (first_line, city, zip, country) -> needs own model
--employee urls/pagination
--set up UI/forms/routing/sorting
--search
+-employee urls
+-set up UI/routing
+-sorting/searching/pagination
 -animation, clean up

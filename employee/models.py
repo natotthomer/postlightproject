@@ -18,6 +18,7 @@ class Employee(models.Model):
         dob = datetime.strftime(self.dob, "%m-%d-%Y")
 
         return {
+            'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'email': self.email,
@@ -26,7 +27,7 @@ class Employee(models.Model):
             'dob': dob,
             'phone': self.phone,
             'cell': self.cell,
-            'image': self.image.to_client() if self.image else {},
+            'image': self.image.to_client() if self.image else None,
             'address': self.address.to_client()
         }
 
@@ -65,6 +66,7 @@ class Address(models.Model):
     )
 
     def to_client(self):
+        print(self)
         return {
             'street': self.street,
             'city': self.city,
