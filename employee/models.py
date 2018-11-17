@@ -31,6 +31,16 @@ class Employee(models.Model):
             'address': self.address.to_client()
         }
 
+    def to_client_simple(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'department': self.department,
+            'image': self.image.thumbnail
+        }
+
 
 class Image(models.Model):
     thumbnail = models.CharField(max_length=128)
