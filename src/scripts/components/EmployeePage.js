@@ -30,7 +30,7 @@ export default class EmployeePage extends React.Component {
 
       return (
         <React.Fragment>
-          <Header text={this.state.full_name} />
+          <Header text={this.state.full_name} id={this.state.id} />
           <div className="employee-info-card">
             <div className="employee-info-card-header">
               <div className="employee-info-card-image">

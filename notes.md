@@ -12,8 +12,6 @@ Features/Requirements/Tools:
 -backend in Django
 
 
--sorting
--navigation between two routes -> should it clear search data?, etc.
 -animation, clean up
 -loading spinners/animation
   -only show paginator when ready
