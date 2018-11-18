@@ -50,8 +50,11 @@ const Sorter = props => {
     })
     
     return (
-        <div>
-            {buttons}
+        <div className="sorter-container">
+            <div className="sorter-buttons">
+                <span>Sort By</span>
+                {buttons}
+            </div>
         </div>
     )
 }
