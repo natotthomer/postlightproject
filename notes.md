@@ -15,3 +15,4 @@ Features/Requirements/Tools:
 -animation, clean up
 -loading spinners/animation
   -only show paginator when ready
+-create/edit/delete forms
