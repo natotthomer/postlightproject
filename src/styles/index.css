@@ -19,11 +19,23 @@ a {
 .search-container {
   max-width: 400px;
   margin: auto;
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .search-bar {
   width: 100%;
-  margin-bottom: 10px;
+  font-size: 20px;
+  outline: none;
+}
+
+.search-clear-button {
+  margin-left: -41px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  height: 20px;
+  margin-top: 1px;
 }
 
 .employee-list {

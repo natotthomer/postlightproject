@@ -26,8 +26,9 @@ export default class App extends React.Component {
     this.fetchEmployees()
   }
 
-  searchHandler (e) {
-    this.setState({ searchValue: e.target.value }, this.fetchEmployees)
+  searchHandler (value) {
+    console.log(value)
+    this.setState({ searchValue: value }, this.fetchEmployees)
   }
 
   fetchEmployees () {
