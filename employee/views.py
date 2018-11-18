@@ -7,22 +7,27 @@ from employee.models import Employee
 
 def index(request):
     search_value = request.GET.get('search')
+    order_by = request.GET.get('order', '-id')
 
     if search_value is not '':
         paginator = Paginator(
             Employee.objects.filter(
-                    Q(first_name__starts_with=search_value) |
+                    Q(first_name__icontains=search_value) |
                     Q(last_name__icontains=search_value) |
                     Q(email__icontains=search_value) |
                     Q(department__icontains=search_value) |
                     Q(title__icontains=search_value))
                 .select_related('image')
-                .select_related('address'), 10)
+                .select_related('address')
+                .order_by(order_by), 10)
+                
     else:
         paginator = Paginator(
             Employee.objects.all()
                 .select_related('image')
-                .select_related('address'), 10)
+                .select_related('address')
+                .order_by(order_by), 10)
+                
 
     try:
         results = paginator.page(request.GET.get('page'))

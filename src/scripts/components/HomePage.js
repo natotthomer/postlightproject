@@ -3,6 +3,7 @@ import ReactPaginate from 'react-paginate'
 
 import Header from './Header'
 import SearchBar from './SearchBar'
+import Sorter from './Sorter'
 import EmployeeList from './EmployeeList'
 
 const HomePage = props => {
@@ -25,6 +26,9 @@ const HomePage = props => {
       <Header text={'Browse Directory'} />
       <SearchBar searchHandler={props.searchHandler}
         searchValue={props.searchValue} />
+      <Sorter sortHandler={props.sortHandler}
+        sortBy={props.sortBy}
+        sortDirection={props.sortDirection} />
       <EmployeeList employees={props.employees} />
       <div className="employee-list-paginator-container">
         {paginator}

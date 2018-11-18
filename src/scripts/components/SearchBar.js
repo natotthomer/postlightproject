@@ -15,7 +15,7 @@ const SearchBar = props => {
         className="search-bar"
         onChange={handleSearchChange}
         value={props.searchValue}
-        placeholder={'Search employee directory'} />
+        placeholder={'Search by name, department or email'} />
       <input type="button"
         value="clear"
         onClick={clear}

@@ -14,12 +14,15 @@ export default class App extends React.Component {
       searchValue: '',
       numPages: undefined,
       employees: [],
-      page: 0
+      page: 0,
+      sortBy: 'id',
+      sortDirection: ''
     }
 
     this.searchHandler = this.searchHandler.bind(this)
-    this.onPageChange = this.onPageChange.bind(this)
+    this.sortHandler = this.sortHandler.bind(this)
     this.fetchEmployees = this.fetchEmployees.bind(this)
+    this.onPageChange = this.onPageChange.bind(this)
   }
 
   componentDidMount () {
@@ -27,12 +30,15 @@ export default class App extends React.Component {
   }
 
   searchHandler (value) {
-    console.log(value)
     this.setState({ searchValue: value }, this.fetchEmployees)
   }
 
+  sortHandler (sortBy, sortDirection) {
+    this.setState({ sortBy, sortDirection }, this.fetchEmployees)
+  }
+
   fetchEmployees () {
-    fetcher({ url: `/api/employees/?page=${this.state.page + 1}&search=${this.state.searchValue}`})
+    fetcher({ url: `/api/employees/?page=${this.state.page + 1}&search=${this.state.searchValue}&order=${this.state.sortDirection + this.state.sortBy}`})
       .then(response => this.setState({
         employees: response.data,
         numPages: response.num_pages
@@ -50,6 +56,7 @@ export default class App extends React.Component {
           <Route exact path='/' render={(props) => <HomePage
               {...this.state}
               onPageChange={this.onPageChange}
+              sortHandler={this.sortHandler}
               searchHandler={this.searchHandler} />} />
           <Route exact path='/:id' component={EmployeePage} />
         </React.Fragment>
