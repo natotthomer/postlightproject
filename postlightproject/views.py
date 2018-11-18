@@ -5,6 +5,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 @ensure_csrf_cookie
 def home(request):
+    print('hi')
     if request.user.is_authenticated:
         user = {'id': request.user.id, 'username': request.user.username }
     else:

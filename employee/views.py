@@ -45,5 +45,14 @@ def read(request, id):
         employee = Employee.objects.get(id=id)
         result = employee.to_client()
     except Employee.DoesNotExist:
-        result = None
+        return JsonResponse({ 'error': 'Employee does not exist' }, status=400)
     return JsonResponse({ 'data': result })
+
+def delete(request, id):
+    print(id)
+    try:
+        employee = Employee.objects.get(id=id)
+        employee.delete()
+    except Employee.DoesNotExist:
+        return JsonResponse({ 'error': 'Employee does not exist' }, status=400)
+    return JsonResponse({ 'message': 'Employee deleted' })

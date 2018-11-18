@@ -78,7 +78,6 @@ class Address(models.Model):
     )
 
     def to_client(self):
-        print(self)
         return {
             'street': self.street,
             'city': self.city,

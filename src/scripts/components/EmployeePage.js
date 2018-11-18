@@ -1,5 +1,6 @@
 import React from 'react'
 
+import history from '../history'
 import fetcher from '../utils/fetcher'
 import Header from './Header'
 
@@ -8,11 +9,25 @@ export default class EmployeePage extends React.Component {
     super(props)
 
     this.state = {}
+
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   componentDidMount () {
+    console.log(this.props)
     fetcher({ url: `/api/employees/${this.props.match.params.id}`})
       .then(response => this.setState(response.data))
+      .catch(error => this.props.handleMessage(error))
+  }
+
+  handleDelete (e) {
+    e.preventDefault()
+
+    fetcher({ url: `/api/employees/${this.props.match.params.id}/delete/` })
+      .then(response => this.props.handleMessage(response))
+      .then(() => this.props.fetchEmployees())
+      .then(() => history.push('/'))
+      .catch(error => this.props.handleMessage(error))
   }
 
   render () {
@@ -49,6 +64,9 @@ export default class EmployeePage extends React.Component {
               <div>Cell: {cell}</div>
               <div>Home: {phone}</div>
               <div>Birthday: {dob}</div>
+            </div>
+            <div className="employee-page-crud-buttons">
+              <button onClick={this.handleDelete}>Delete</button>
             </div>
           </div>
         </React.Fragment>
