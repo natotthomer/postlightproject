@@ -42,16 +42,10 @@ export default class UpdateModal extends React.Component {
     handleUpdate (e) {
         e.preventDefault()
         
+        const { address, ...employee } = this.state.employee
         const data = {
-            first_name: this.state.employee.first_name,
-            last_name: this.state.employee.last_name,
-            email: this.state.employee.email,
-            department: this.state.employee.department,
-            title: this.state.employee.title,
-            phone: this.state.employee.phone,
-            cell: this.state.employee.cell,
-            dob: this.state.employee.dob,
-            ...this.state.employee.address
+            ...employee,
+            ...address
         }
 
         this.props.updateEmployee(data)
