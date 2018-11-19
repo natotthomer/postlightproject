@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from employee.models import Employee
+from employee.models import Employee, Address
 
 def index(request):
     search_value = request.GET.get('search')
@@ -49,10 +49,38 @@ def read(request, id):
     return JsonResponse({ 'data': result })
 
 def delete(request, id):
-    print(id)
     try:
         employee = Employee.objects.get(id=id)
         employee.delete()
     except Employee.DoesNotExist:
         return JsonResponse({ 'error': 'Employee does not exist' }, status=400)
     return JsonResponse({ 'message': 'Employee deleted' })
+
+def update(request, id):
+    try:
+        employee = Employee.objects.filter(id=id)
+        address = Address.objects.filter(employee=employee.first())
+        employee_data = {
+            'first_name': request.POST.get('first_name'),
+            'last_name': request.POST.get('last_name'),
+            'email': request.POST.get('email'),
+            'title': request.POST.get('title'),
+            'cell': request.POST.get('cell'),
+            'phone': request.POST.get('phone'),
+            'department': request.POST.get('department')
+        }
+
+        address_data = {
+            'street': request.POST.get('street'),
+            'city': request.POST.get('city'),
+            'state': request.POST.get('state'),
+            'postal_code': request.POST.get('postal_code'),
+        }
+        
+        employee.update(**employee_data)
+        address.update(**address_data)
+
+        result = employee.first().to_client()
+    except Employee.DoesNotExist:
+        return JsonResponse({ 'error': 'Employee does not exist' }, status=400) 
+    return JsonResponse({ 'data': result, 'message': 'Employee information updated' })

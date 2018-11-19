@@ -4,8 +4,7 @@ from employee import views
 
 urlpatterns = [
     re_path(r'^(?P<id>[^/]+)/delete/$', views.delete, name='employee_delete'),
+    re_path(r'^(?P<id>[^/]+)/update/$', views.update, name='employee_update'),
     re_path(r'^(?P<id>[^/]+)$', views.read, name='employee_read'),
     re_path(r'^$', views.index, name='employee_index'),
 ]
-
-print(urlpatterns)

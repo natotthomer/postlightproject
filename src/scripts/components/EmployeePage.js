@@ -3,20 +3,39 @@ import React from 'react'
 import history from '../history'
 import fetcher from '../utils/fetcher'
 import Header from './Header'
+import UpdateModal from './UpdateModal'
 
 export default class EmployeePage extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      modalOpen: false
+    }
 
+    this.fetchEmployee = this.fetchEmployee.bind(this)
+    this.updateEmployee = this.updateEmployee.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleModalStateChange = this.handleModalStateChange.bind(this)
   }
 
   componentDidMount () {
-    console.log(this.props)
+    this.fetchEmployee()
+  }
+
+  fetchEmployee () {
     fetcher({ url: `/api/employees/${this.props.match.params.id}`})
       .then(response => this.setState(response.data))
+      .catch(error => this.props.handleMessage(error))
+  }
+
+  updateEmployee (newData) {
+    fetcher({ 
+      url: `/api/employees/${this.props.match.params.id}/update/`,
+      method: 'POST',
+      data: newData
+    })
+      .then(response => this.setState(response.data, this.props.handleMessage(response.message)))
       .catch(error => this.props.handleMessage(error))
   }
 
@@ -29,6 +48,11 @@ export default class EmployeePage extends React.Component {
       .then(() => history.push('/'))
       .catch(error => this.props.handleMessage(error))
   }
+
+  handleModalStateChange () {
+    this.setState({ modalOpen: !this.state.modalOpen })
+  }
+
 
   render () {
     if (this.state.full_name) {
@@ -43,9 +67,16 @@ export default class EmployeePage extends React.Component {
         dob
       } = this.state
 
+      const { modalOpen, ...employee } = this.state
       return (
         <React.Fragment>
           <Header text={this.state.full_name} id={this.state.id} />
+          <UpdateModal 
+            employee={employee}
+            modalOpen={modalOpen}
+            handleModalStateChange={this.handleModalStateChange}
+            updateEmployee={this.updateEmployee}
+            fetchEmployee={this.fetchEmployee} />
           <div className="employee-info-card">
             <div className="employee-info-card-header">
               <div className="employee-info-card-image">
@@ -67,6 +98,7 @@ export default class EmployeePage extends React.Component {
             </div>
             <div className="employee-page-crud-buttons">
               <button onClick={this.handleDelete}>Delete</button>
+              <button onClick={this.handleModalStateChange}>Update</button>
             </div>
           </div>
         </React.Fragment>
