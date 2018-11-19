@@ -14,6 +14,20 @@ Features include:
 
 ## To Install
 
-After cloning the repo, `cd` into the folder
+This assumes that NPM and Python3 & virtualenv are installed locally
+
+After cloning the repo, `cd` into the folder and perform the following commands:
 
 - `virtualenv -p python3 venv`
+- `source venv/bin/activate`
+- `pip install -r requirements.txt`
+- `python manage.py migrate`
+- `python manage.py seed`
+- `python manage.py runserver`
+
+In another terminal window:
+
+- `npm install`
+- `webpack -w`
+
+Navigate the browser to `localhost:8000`!
