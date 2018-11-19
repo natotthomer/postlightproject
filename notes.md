@@ -12,7 +12,8 @@ Features/Requirements/Tools:
 -backend in Django
 
 
--animation, clean up
+-animation
+-clean up
+-model validators
 -loading spinners/animation
-  -only show paginator when ready
--create/edit/delete forms
+-create/edit forms
