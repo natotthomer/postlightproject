@@ -189,7 +189,7 @@ export default class UpdateModal extends React.Component {
                                 onChange={this.handlePostalCodeChange} />
                             </div>
                             <div className="modal-input-group">
-                              <input type='submit' />
+                              <Input type='submit' />
                             </div>
                         </form>
                       </div>
