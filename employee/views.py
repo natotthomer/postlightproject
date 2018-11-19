@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from employee.models import Employee, Address
+from employee.forms import EmployeeForm, AddressForm
 
 def index(request):
     search_value = request.GET.get('search')
@@ -20,7 +21,6 @@ def index(request):
                 .select_related('image')
                 .select_related('address')
                 .order_by(order_by), 10)
-                
     else:
         paginator = Paginator(
             Employee.objects.all()
@@ -28,7 +28,6 @@ def index(request):
                 .select_related('address')
                 .order_by(order_by), 10)
                 
-
     try:
         results = paginator.page(request.GET.get('page'))
     except PageNotAnInteger:
@@ -48,39 +47,46 @@ def read(request, id):
         return JsonResponse({ 'error': 'Employee does not exist' }, status=400)
     return JsonResponse({ 'data': result })
 
+def create(request):
+    if request.method == 'POST':
+        employee_form = EmployeeForm(request.POST)
+
+        if employee_form.is_valid():
+            employee = employee_form.save()
+            address_form = AddressForm(request.POST)
+
+            if address_form.is_valid():
+                address = address_form.save()
+
+                return JsonResponse({ 'data': employee.to_client(), 'message': 'Employee created' })
+            return JsonResponse({ 'error': address_form.errors }, status=400)
+        return JsonResponse({ 'error': employee_form.errors }, status=400)
+    return JsonResponse({ 'error': 'Must be POST request' }, status=400)
+
+
 def delete(request, id):
-    try:
+    if request.method == 'POST':
+        try:
+            employee = Employee.objects.get(id=id)
+            employee.delete()
+        except Employee.DoesNotExist:
+            return JsonResponse({ 'error': 'Employee does not exist' }, status=400)
+        return JsonResponse({ 'message': 'Employee deleted' })
+    return JsonResponse({ 'error': 'Must be POST request' }, status=400)
+
+def update(request, id, **kwargs):
+    if request.method == 'POST':
         employee = Employee.objects.get(id=id)
-        employee.delete()
-    except Employee.DoesNotExist:
-        return JsonResponse({ 'error': 'Employee does not exist' }, status=400)
-    return JsonResponse({ 'message': 'Employee deleted' })
+        employee_form = EmployeeForm(request.POST, instance=employee)
 
-def update(request, id):
-    try:
-        employee = Employee.objects.filter(id=id)
-        address = Address.objects.filter(employee=employee.first())
-        employee_data = {
-            'first_name': request.POST.get('first_name'),
-            'last_name': request.POST.get('last_name'),
-            'email': request.POST.get('email'),
-            'title': request.POST.get('title'),
-            'cell': request.POST.get('cell'),
-            'phone': request.POST.get('phone'),
-            'department': request.POST.get('department')
-        }
+        if employee_form.is_valid():
+            employee = employee_form.save()
+            address = Address.objects.get(employee=employee)
+            address_form = AddressForm(request.POST, instance=address)
 
-        address_data = {
-            'street': request.POST.get('street'),
-            'city': request.POST.get('city'),
-            'state': request.POST.get('state'),
-            'postal_code': request.POST.get('postal_code'),
-        }
-        
-        employee.update(**employee_data)
-        address.update(**address_data)
-
-        result = employee.first().to_client()
-    except Employee.DoesNotExist:
-        return JsonResponse({ 'error': 'Employee does not exist' }, status=400) 
-    return JsonResponse({ 'data': result, 'message': 'Employee information updated' })
+            if address_form.is_valid():
+                address = address_form.save()
+                return JsonResponse({ 'data': employee.to_client(), 'message': 'Employee information updated' })
+            return JsonResponse({ 'error': address_form.errors }, status=400)
+        return JsonResponse({ 'error': employee_form.errors }, status=400)
+    return JsonResponse({ 'error': 'Must be POST request' }, status=400)

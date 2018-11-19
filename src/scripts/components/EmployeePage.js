@@ -35,7 +35,7 @@ export default class EmployeePage extends React.Component {
       method: 'POST',
       data: newData
     })
-      .then(response => this.setState(response.data, this.props.handleMessage(response.message)))
+      .then(response => this.setState(response.data, this.props.handleMessage(response)))
       .catch(error => this.props.handleMessage(error))
   }
 

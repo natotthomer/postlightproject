@@ -50,6 +50,7 @@ export default class UpdateModal extends React.Component {
             title: this.state.employee.title,
             phone: this.state.employee.phone,
             cell: this.state.employee.cell,
+            dob: this.state.employee.dob,
             ...this.state.employee.address
         }
 
